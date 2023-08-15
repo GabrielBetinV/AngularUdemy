@@ -1,0 +1,524 @@
+*** Creamos el proyecto
+
+ng new gifsApp
+
+seleccionamos CSS
+
+
+*** Descargamos e instalamos Bootstrap
+
+https://getbootstrap.com/
+
+- Copiamos el enlace del CSS
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+lo pegamos en el index.html
+
+
+*** Diseño inicial
+
+En la clase app. html
+
+<div class="d-flex">
+
+<!-- Inicio del sidebar-->
+<div class = "bg-dark border-right p-3" id="sidebar">
+
+    <h3 class = "text-light">
+        Gifs-App
+    </h3>
+
+    <hr class="text-white">
+
+    <div class="list-group list-reset">
+        <a href="#" class="list-group-item list-group-item-action">
+            Dashboard
+        </a>      
+    </div>    
+</div>
+
+<!-- Fin del sidebar -->
+
+
+<div class="container">
+
+    <div class="row p-3">
+        <div class="col">
+            <h5>Buscar:</h5>
+            <input type="text" class="form-control" placeholder="Buscar gifs....">
+        </div>    
+    </div>
+
+    <hr>
+
+    <div class="row p-3">
+        <div class="col">
+           
+        </div>    
+    </div>
+    
+</div>
+</div>
+
+En el CSS
+
+html, body{
+
+    height: 100%;
+
+}
+
+#sidebar{
+
+    height: 100%;
+    min-height: 100vh;
+    min-width: 180px;
+
+}
+
+*** Modulo Shared
+
+No podemos colocar todo el codigo en el app component como esta en el punto anterior
+debemos componetizar
+
+-Crear el modulo sharde.module.ts
+	ng g m shared
+-crear componente sidebar.component.ts
+	ng g c shared/sidebar --skipTests -is , sin el archivo css
+
+- exportar el sidebar en el shared.module
+	 exports:[
+    SidebarComponent
+  ]
+	
+-importar el shared.module dentro del app.module.ts
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+-colocar el <app-sidebar></sider> en el app componente
+
+*** GifsModule
+
+- Creamos el modulo para mostrar los gifs
+
+	 ng g m gifs
+
+-importamos elgusmodule en el app.module
+
+- Creamos los componentes
+
+	 ng g c gifs/gisfPage
+
+- Exportamos el componente dentro de gifs.module
+
+- Este es codigo del HTML
+
+
+
+    <!-- Aqui buscamos las imagenes -->
+    <div class="row p-3">
+        <div class="col">
+            <h5>Buscar:</h5>
+            <input type="text" class="form-control" placeholder="Buscar gifs....">
+        </div>    
+    </div>
+
+    <hr>
+
+
+    <!-- Aca mostramos las imagenes -->
+    <div class="row p-3">
+        <div class="col">
+           
+        </div>    
+    </div>
+
+
+IMPORTANTE: Se se recomienda coloca las classes de bootstrap en los componentes
+en el caso de que cubra muchos otros componentes o etiquetas
+
+app.componente
+
+<div class="d-flex">
+
+<!-- Inicio del sidebar-->
+<app-sidebar class = "bg-dark border-right p-3" id="sidebar"></app-sidebar>
+<!-- Fin del sidebar -->
+
+<app-gisf-page class="container"></app-gisf-page>
+
+</div>
+
+
+- Creamos el componente de busqueda
+
+ng g c gifs/busqueda
+
+- Creamos el componente que muestra el resultado
+	 ng g c gifs/resultado
+
+- agregamos las etiquetas para busqueda
+
+ <h5>Buscar:</h5>
+<input type="text" class="form-control" placeholder="Buscar gifs....">
+
+- En gisf page colocamos
+
+<app-busqueda></app-busqueda>
+
+- Agregamos los datos a la clase resultado
+
+- En gisf colocamos e nuevo documetno
+
+<app-resultado></app-resultado>
+
+*** @ViewChild
+
+https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
+
+Metodo Keyup => ejecuta solo con escribir en las cajas de texto
+(keyup) ="funcion()"
+
+Para que no se repetitivo colocamos el evento
+(keyup) ="funcion($event)"
+
+en el ts 
+funcion(event:any){
+    console.log(event)
+
+  }
+
+Podriamos buscar desde la consola en el navegador el nombre del evento 
+que esta disparando y colocarlo
+
+en el ts 
+funcion(eventKeyboardEvent){
+    console.log(event)
+
+  }
+
+Pero para este caso vamos a trabajar asi para mandar los datos alts
+
+Html
+
+<h5>Buscar:</h5>
+<input
+ type="text" 
+ class="form-control" 
+ placeholder="Buscar gifs...."
+(keyup.enter)="buscar(txtBuscar.value)"
+#txtBuscar -> Referencia local
+>
+
+Ts
+
+ buscar(termino: string){
+    console.log(termino)
+
+  }
+
+CON el @ViewChild('txtBuscar') txtBuscar!:ElementRef
+
+buscaremos la referencia local del HTML #txtBuscar -> Referencia local y lo asiggna al elemento
+
+el ! indica que estamos seguro que el objeto no sera nulo => https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
+Al utilizarlo ya no tendriamos que enviarlo ni recibirlo dentro de la funcion buscar
+
+Html
+<h5>Buscar:</h5>
+
+<!-- Esto no permite borrar la caja de texto cuando capturamos -->
+<input
+ type="text" 
+ class="form-control" 
+ placeholder="Buscar gifs...."
+(keyup.enter)="buscar()"
+#txtBuscar 
+>
+TS
+
+@ViewChild('txtBuscar') txtBuscar!:ElementRef
+
+  buscar(){
+
+    const valor = this.txtBuscar.nativeElement.value;
+    console.log(valor)
+  }
+
+
+PODRIAMOs indicar l elemento de referencia para que pueda ser tipado, asi
+
+@ViewChild('txtBuscar') txtBuscar!:ElementRef<HTMLInputElement>;
+
+De esta manera nos permie utilizar sus opciones, por ejemplo asi para que se pueda 
+borrar el dato de la caja de texto
+
+this.txtBuscar.nativeElement.value = ''
+
+
+*** Creamos el servicio
+
+ng g s gifs/services/gifs skipTests
+
+-- Dentro del service creamos el servicio para trabajar con el historial de busqueda
+
+ /*Variable encapsaulada del historial*/ 
+private _historial: string[] = [];
+
+/*  get de la variable*/
+get historial(){
+  return [...this._historial]
+}
+
+
+/*Metodo que guarda el historial */
+buscarGifs( query: string){
+
+  this._historial.unshift(query)
+
+  console.log(this._historial)
+
+}
+
+
+-- Injectamos el servicio en el componente
+
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
+
+@Component({
+  selector: 'app-busqueda',
+  templateUrl: './busqueda.component.html',
+  styleUrls: ['./busqueda.component.css']
+})
+export class BusquedaComponent implements OnInit {
+
+/* Busca datos en las etiquetas HTML */  
+@ViewChild('txtBuscar') txtBuscar!:ElementRef<HTMLInputElement>;
+
+/* Injectamos el servicio */
+constructor( private gifsService: GifsService){}
+
+  buscar(){
+
+    /* Almacenamos el valor de la caja de texto */
+    const valor = this.txtBuscar.nativeElement.value;
+
+    /* Borra los atos  caja de texto */
+    this.txtBuscar.nativeElement.value = ''
+
+    /* Utilizamoss el servicio */
+    this.gifsService.buscarGifs(valor)
+  }
+
+  ngOnInit(): void {
+  }
+
+}import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
+
+@Component({
+  selector: 'app-busqueda',
+  templateUrl: './busqueda.component.html',
+  styleUrls: ['./busqueda.component.css']
+})
+export class BusquedaComponent implements OnInit {
+
+/* Busca datos en las etiquetas HTML */  
+@ViewChild('txtBuscar') txtBuscar!:ElementRef<HTMLInputElement>;
+
+/* Injectamos el servicio */
+constructor( private gifsService: GifsService){}
+
+  buscar(){
+
+    /* Almacenamos el valor de la caja de texto */
+    const valor = this.txtBuscar.nativeElement.value;
+
+    /* Borra los atos  caja de texto */
+    this.txtBuscar.nativeElement.value = ''
+
+    /* Utilizamoss el servicio */
+    this.gifsService.buscarGifs(valor)
+  }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+--- Ahora vamos a consumir el servicio para mostrarlo en el sidebar
+
+En el component de side bar 
+
+import { Component, OnInit } from '@angular/core';
+import { GifsService } from '../../gifs/services/gifs.service';
+
+@Component({
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
+})
+export class SidebarComponent implements OnInit {
+
+  /* Injecto el servicio */
+  constructor(private gifsService:GifsService) { }
+
+  /* Realizo un get para capturar los datos del servicio */
+
+  get historial(){
+    return this.gifsService.historial;
+  }
+
+  ngOnInit(): void {
+  }
+
+}
+
+Lo mostramos en el HTML conun ngFor
+
+<div>
+
+    <h3 class = "text-light">
+        Gifs-App
+    </h3>
+
+    <hr class="text-white">
+
+    <div class="list-group list-reset">
+        <a  *ngFor="let  item of historial"
+            href="#"
+           class="list-group-item list-group-item-action">
+            {{ item}}
+        </a>      
+    </div>    
+</div>
+
+
+***  Controlar  el historial
+
+- Evitar que se guarden vacios
+
+Dentro de la siguiente funcion en busqueda.component.ts colocamos la condicion
+
+ buscar(){
+
+    /* Almacenamos el valor de la caja de texto */
+    const valor = this.txtBuscar.nativeElement.value;
+
+    /*Condicion, si es iguala cero no haga nada*/		
+    if(valor.trim().length === 0){
+      return;
+    }
+
+    /* Borra los atos  caja de texto */
+    this.txtBuscar.nativeElement.value = ''
+
+    /* Utilizamoss el servicio */
+    this.gifsService.buscarGifs(valor)
+  }
+
+- Cantidad de datos en el historial, lo cortamos con splice en el metodo que guarda el historial dentro del service
+
+/*Metodo que guarda el historial */
+buscarGifs( query: string){
+
+  this._historial.unshift(query)
+  this._historial = this._historial.splice(0,10);
+
+  console.log(this._historial)
+
+}
+
+- Valores unicos
+
+Agregamos la condicion con el includes, que indica si el valor existe en el arreglo no lo guarde.
+
+
+buscarGifs( query: string){
+
+  if(!this._historial.includes(query)) {
+    this._historial.unshift(query) 
+    this._historial = this._historial.splice(0,10); // Incluimos el corte aca para que se haga siempre y cuando hay insert
+  } 
+ 
+  this._historial = this._historial.splice(0,10);
+  console.log(this._historial)
+}
+
+- Almacenamos todos los valores que capturemos en miniscula
+
+buscarGifs( query: string){
+  /* Convertimos los valores en minuscula */
+  query = query.trim().toLocaleLowerCase();
+
+  //Condicionamos al valor si existe en el arreglo,no lo vuelva a guardar
+  if(!this._historial.includes(query)) {
+    // Almacena el nuevo valor al arreglo
+    this._historial.unshift(query)
+    // Corta el arreglo hasta 10 valores maximo
+    this._historial = this._historial.splice(0,10);
+  }  
+  console.log(this._historial)
+}
+
+- Podemos capitalizar el los nombres de las palabras (Que las primeras letras de las palabras sean en mayuscula)
+
+Utilizaremos un pipe para que cambie visualmente las pañabras desde el html del sidebar {{ item | titlecase}}
+
+<div>
+
+    <h3 class = "text-light">
+        Gifs-App
+    </h3>
+
+    <hr class="text-white">
+
+    <div class="list-group list-reset">
+        <a  *ngFor="let  item of historial"
+            href="#"
+           class="list-group-item list-group-item-action">
+            {{ item | titlecase}}
+        </a>      
+    </div>    
+</div>
+
+*** Giphy api key, consumir la API
+
+- crear la cuenta en https://developers.giphy.com/
+
+- Creamos la API y guardamos la llave
+
+- Lo probamos en postman con ladocumentacion de Giphy
+
+
+
+
+
+
+
+
+
+

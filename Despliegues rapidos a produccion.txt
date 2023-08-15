@@ -1,0 +1,9 @@
+*** Generar la version de produccion
+
+ng build --prod
+
+La carpeta se guardo en D:\ANGULAR\3.Angular\Proyectos\01-bases\dist
+
+*** https://www.netlify.com/
+
+Solo es dejar caer la carpeta del proyecto dist en la pagina para que sde despliegue

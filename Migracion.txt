@@ -1,0 +1,84 @@
+** URL ADMMIN LT
+
+https://adminlte.io/
+
+** Instalar Angula
+
+npm install -g @angular/cli
+
+** Cear proyecto
+
+ng new "Nombre del proyecto"
+
+
+** Instalar node:modules
+
+ npm install 
+
+** Compiamos as carpetas dist y  plugins dentrei de ka carpeta assets
+  
+src/assets
+
+** Creamos elsiguiente arbol de carpeta para organizar el proyecto
+
+app/
+   auth/ => Paginas relacionas al registro e inicio de sesion
+   pages/ => Para todos los modulos, organizarlo dependiendo de la escala del proyecto
+   services/ => para el consumo de los servicios
+   shared/ => Todos los componentes compartidos (header,footer,comonents, etc)				 	 
+
+**  Creamos los routing para app, pages y auth, flat para que no se cree la carpeta
+
+ng g m app-routing --flat => Para importar todos los routing
+ng g m auth/auth-routing --flat => Para las rutas de las sesiones
+ng g m pages/pages-routing --flat => Para las rutas de todas las paginas
+
+
+** creamos los componentes de auth y elmodulo
+
+ng g c auth/login --skip-Tests => para que no se cree el archivo de test
+ng g c auth/register
+ng g m auth/auth --flat
+
+** Creamos el componente de pages
+
+ng g c pages/pages --flat
+
+** Creamos el modulo para pages
+
+ng g m pages/pages --flat  
+
+
+** Crear los componentes de las paginas que estaran dentro de pages
+
+ng g c pages/dashboard --skip-Tests
+ng g c pages/usuarios --skip-Tests
+ng g c pages/productos --skip-Tests
+ng g c pages/bodegas --skip-Tests
+
+
+** Crear modulo pra shared
+
+ng g m shared/shared --flat
+
+** Creamos los componentes de Share
+
+ng g c shared/header --skip-Tests
+ng g c shared/footer --skip-Tests
+ng g c shared/sidebar --skip-Tests
+
+
+** Creamos un componente para no found
+
+ng g c page-nofound    
+
+** Creamos el servicio para  productos
+
+ng g s services/productos  
+
+
+
+
+
+
+

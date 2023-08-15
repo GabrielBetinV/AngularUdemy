@@ -1,0 +1,32 @@
+=> ng new bases -> Crear un proyecto
+
+=> ng serve -o -> Levantar el servidor
+
+=> ng g c (ó ng generate component) carpeta donde se alojara/nombre del componente -> Crear un componente automaticamente
+
+=> ng generate module nombre (ó ng g m nombre) -> Para crear un modulo
+
+=> ng g c dbz/mainPage --skipTests -> Para crear un componente sin las carpetas de prueba
+
+=> ctrl + k y ctrl + c para comentar una linea en html
+
+
+=> PARA CREAR UN  TAGS EN GIT HUB
+
+git tag -a  V0.1.0 -m "Fin Seccion 4"
+git tag
+git
+
+=> Para activar la consola de visual studio para Angular
+Copiar la variable de entorno
+C:\Users\gabri\AppData\Roaming\npm
+Cambiar la diectiva de ejecucion en powershell como admin
+Set-ExecutionPolicy Unrestricted
+
+Las [] Singinfica cambiar la propiedad de un atributo
+Los () Envian eventos
+Las [()] Escuchar y emitir evento
+
+=> Crear servicios
+
+ng g s gifs/services/gifs skipTests

@@ -1,0 +1,18 @@
+
+
+@Input => Importa las variables
+
+@Output => 
+
+@ViewChild => Busca los elementos de las etiquetas HTML
+
+@Component => Para crear el elemento
+
+ng g s gifs/services/gifs
+
+@Injectable => 	Injectar dependencias
+
+
+
+
+

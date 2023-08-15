@@ -1,0 +1,1601 @@
+DOCUMENTACIÓN: angular.io/cli
+
+BLOQUES FUNDAMENTALES
+
+* Componentes => Un bloque de codigo HTML y TypeScript
+* Servicios => Lugares centralizados de informacioc ejemplo:
+	componente -> boton -> servicios(Puede ser base de datos)
+*Directivas =>
+	- Directivas de componentes => Tiene un codigo html reutilizable
+	- Directivas Estructurales => Modificar el DOM o el HTML
+	- Directivas de atributos => Cambian la apariencia de los componentes, elementos o directiva
+
+* Rutas => URL del navegador WEBg
+
+* Modulos => Agrupan todo lo anteriormente mencionado e incluso otros modulos
+
+* Crear proyectos con Angular CLI
+
+	ng new bases
+
+* Levantamos el servidor
+
+	ng serve -o
+
+* Ya no viene TSLint, pero podemos usar ESLint y no viebe e2e
+
+* EXPLICACION DE CADA ARCHIVOS
+
+	- tslint.json => Reglas para programar
+	- tsconfig.json => Archivo de configuracion de TypeScript
+	- tsconfig.spec.json => Para realizar las pruebas Unitarias
+	- tsconfig.app.json => La configuracion de la aplicacion
+	- package.json => Instalaciones de dependencias de produccion y desarrollo
+	- package-lock.json => Como se construyo los modulos de node
+	- karma.conf.js => Configuraciones para las pruebas  unitarias e integracion basadas en karma
+	- angular.json => Configuraciones para nuesta aplicacion (style, assets etc)
+	- .gitignore => Archivo que no quiero que Git le de seguimiento
+	- .editorconfig =>Reglas para los archivos
+	- .browserslistrc => Por si se debe incrementar la compatibilida a Internet Explore 11, esto es viejo
+
+	- src => 
+		- app => Componente de la aplicacion (.css(Estilos), .html(Vistas),.spect.ts(pruebas) y ts(TypeScrip))
+		app.module.ts contiene todos los modulos de la aplicacion
+
+		-assets => Recursos estaticos (Imagenes,sonidos etc)
+
+		-environments => Variables de entornos 
+
+		-index.html => La plantilla General
+
+		- main.ts => Indica el ambiente en el que estamos trabajando
+
+		-polyfills.ts => Compatibilidad con todos los navegadores
+
+		- styles.css => Estilos que se aplican a nivel general
+
+		- test => para trabajar con las pruebas
+
+* Estilos basicos para la aplicacion
+
+	https://gist.github.com/Klerith/3ddee04a27c09be05e888d5d4ac1d09f
+	
+	
+* Explicacion de App Component
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root', // Es el nombre del componente
+  templateUrl: './app.component.html', // La plantilla de html, tambien se puede colocar asi template y backtiks y adentro las etiquetas asi:
+  template `
+  <h1>Hola</h1>
+  `	
+  styleUrls: ['./app.component.css'] // Los estilos
+})
+
+export class AppComponent {
+ public title:string = 'bases';
+}
+
+en el html podemos imprimir la variable tilde
+
+<h1>{{title}}</h1>
+
+
+* Crear un contador  en el APP component
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root', // Es el nombre del componente
+  templateUrl: './app.component.html', // La plantilla de html, tambien se puede colocar asi template y adentro las etiquetas
+  styleUrls: ['./app.component.css'] // Los estilos
+})
+
+export class AppComponent {
+  public title:string = 'bases';
+  public numero:number = 0;// Inicializamos una variable en 0
+}
+
+
+Colocamos un evento click en el button y la suma o resta de numeros
+No es recomendable tener la logica en el html pero esta vez sera para practicar
+<button (click)="numero = numero +1;"> +1</button>
+
+<span>{{numero}}</span>
+
+<button (click)="numero = numero -1;"> -1</button>
+
+* Metodos en el componente
+
+- Primera forma colocando  2 metodos
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root', // Es el nombre del componente
+  templateUrl: './app.component.html', // La plantilla de html, tambien se puede colocar asi template y adentro las etiquetas
+  styleUrls: ['./app.component.css'] // Los estilos
+})
+
+export class AppComponent {
+  public title:string = 'bases';
+  public numero:number = 0;// Inicializamos una variable en 0
+
+   sumar(){
+    this.numero +=1;
+   } 
+  
+   restar(){
+    this.numero -=1;
+   }
+}
+
+En html:
+
+<button (click)="sumar()"> +1</button>
+
+<span>{{numero}}</span>
+
+<button (click)="restar()"> -1</button>
+
+
+- Segunda forma con un solo metodo
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root', // Es el nombre del componente
+  templateUrl: './app.component.html', // La plantilla de html, tambien se puede colocar asi template y adentro las etiquetas
+  styleUrls: ['./app.component.css'] // Los estilos
+})
+
+export class AppComponent {
+  public title:string = 'bases';
+  public numero:number = 0;// Inicializamos una variable en 0
+
+   acumular( valor:number){
+    this.numero += valor
+   }
+
+}
+
+en html:
+
+<button (click)="acumular(1)"> +1</button>
+
+<span>{{numero}}</span>
+
+<button (click)="acumular(-1)"> -1</button>
+
+- Tarea con el contador
+
+Colocamos una base para acumualar de 5 en 5
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root', // Es el nombre del componente
+  templateUrl: './app.component.html', // La plantilla de html, tambien se puede colocar asi template y adentro las etiquetas
+  styleUrls: ['./app.component.css'] // Los estilos
+})
+
+export class AppComponent {
+  public title:string = 'bases';
+  public numero:number = 0;// Inicializamos una variable en 0
+  public base:number = 5;
+
+
+   acumular( valor:number){
+    this.numero += valor
+   }
+}
+
+en html:
+
+h1>Hola Mundo</h1>
+
+<h1>{{title}}</h1>
+
+<h3><strong>{{base}}</strong></h3>
+
+<button (click)="acumular(base)">  + {{base}}</button>
+
+<span>{{numero}}</span>
+
+<button (click)="acumular(-base)"> - {{base}}</button>
+
+
+* Crear uncomponente manualmente
+
+- Creamos un nuevo componente con el nombre contador.component.ts
+
+import  {Component} from '@angular/core';
+
+
+@Component({
+    selector: 'app-contador',
+        template: `
+        <h1>Hola Mundo</h1>
+
+        <h1>{{title}}</h1>
+
+        <h3><strong>{{base}}</strong></h3>
+
+        <button (click)="acumular(base)">  + {{base}}</button>
+
+        <span>{{numero}}</span>
+
+        <button (click)="acumular(-base)"> - {{base}}</button>
+            `
+
+})
+
+
+export class ContadorComponente{
+
+    public title:string = 'bases';
+    public numero:number = 0;// Inicializamos una variable en 0
+    public base:number = 5;
+  
+  
+     acumular( valor:number){
+      this.numero += valor
+     }
+  
+}
+
+- En el html creamos las instancias
+
+<app-contador></app-contador>
+<app-contador></app-contador>
+
+
+- Agregamos el componente a algun modulo, en app.module por ejemplo
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { ContadorComponente } from './contador.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ContadorComponente
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+**Componente de heroe y separacion de directorios
+
+En angular debemos crear carpetas dentro del app para trabajar en forma de modulos
+y agrupar los componentes que comparten cosas en comun.
+
+Ejemplo, creamos una carpeta llamada heroes dentro de app
+Dentro de ella una carpeta llamada heroe
+Dentro de heroe creamos un componente llamado heroe. .html y .ts
+
+heroe.component.ts
+
+import { Component } from "@angular/core";
+
+
+@Component({
+
+    selector: 'app-heroe',
+    templateUrl: 'heroe.component.html'
+})
+export class HeroeComponent{
+}
+
+
+importamos el componente
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { ContadorComponente } from './contador/contador.component';
+import { HeroeComponent } from './heroes/heroe/heroe.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ContadorComponente,
+    HeroeComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+Escribimos un h1 de ejemplo en el html del componente.
+
+<h1>Heroe Component</h1>
+
+Llamamos el componente desde el html del app component
+
+<app-contador></app-contador>
+<app-contador></app-contador>
+<app-heroe></app-heroe>
+
+
+**Cambios en el template del componente
+
+heroe.component.ts
+
+import { Component } from "@angular/core";
+
+
+@Component({
+
+    selector: 'app-heroe',
+    templateUrl: 'heroe.component.html'
+
+
+})
+export class HeroeComponent{
+
+ nombre: string = 'Iroman';
+ edad: number = 45
+
+ // Creamos una funcion que retorno el nombre
+ obtenerNombre(): string{
+    return `${this.nombre} - ${this.edad}`;
+ }
+
+ // Metodo get de la clase
+
+ get nombreCapitalizado(){
+    return this.nombre.toUpperCase();
+
+ }
+
+}
+
+El html del componente
+
+<h1>{{nombre}}</h1>
+
+<dl>
+
+    <td> Nombre: </td>
+    <dd>{{nombre}}</dd>
+
+    <td> Edad: </td>
+    <dd>{{edad}}</dd>
+
+    <td> Funcion: </td>
+    <dd>{{obtenerNombre()}}</dd>   
+
+    <td> Capitalizado: </td>
+    <dd>{{nombreCapitalizado}}</dd>
+</dl>
+
+**  Concepto de 
+
+Creamos una clase asi
+
+import { Component } from "@angular/core";
+
+
+@Component({
+
+    selector: 'app-heroe',
+    templateUrl: 'heroe.component.html'
+
+
+})
+export class HeroeComponent{
+
+ nombre: string = 'Iroman';
+ edad: number = 45
+
+ // Creamos una funcion que retorno el nombre
+ obtenerNombre(): string{
+    return `${this.nombre} - ${this.edad}`;
+ }
+
+ // Metodo get de la clase
+
+ get nombreCapitalizado(): string{
+    return this.nombre.toUpperCase();
+ }
+
+// Creamos un metodo para cambiar la edad
+
+cambiarNombre():void {
+    this.nombre = 'Spiderman'
+}
+
+
+// Creamos un metodo para cambiar de nombre
+
+cambiarEdad():void {
+    this.edad =  30
+
+    }
+}
+
+
+
+en el html
+
+     <h1>{{nombre}}</h1>
+
+<dl>
+
+    <td> Nombre: </td>
+    <dd>{{nombre}}</dd>
+
+    <td> Edad: </td>
+    <dd>{{edad}}</dd>
+
+    <td> Funcion: </td>
+    <dd>{{obtenerNombre()}}</dd>   
+
+    <td> Capitalizado: </td>
+    <dd>{{nombreCapitalizado}}</dd>
+</dl>
+
+<button (click)="cambiarNombre()">
+    Cambiar Heroe
+</button>
+
+
+<button (click)="cambiarEdad()">
+    Cambiar Edad
+</button>
+
+
+** Crear  componente de forma automatica
+
+	ng g c heroes/listado
+
+El componente crea un  ngOnInit, que se puede utilizar para inicializar cosa
+
+** Directiva *ngFor, para recorrer un arreglo como si fuera un ciclo for
+
+-Creamos un arreglo en elcomponente
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-listado',
+  templateUrl: './listado.component.html',
+  
+})
+export class ListadoComponent {
+
+ heroes: string[] = ['Spiderman','Iroman', 'Goku']
+ heroeBorrado: string = "";
+
+ borrarHeroe(){
+
+this.heroeBorrado = this.heroes.shift() || ' ';
+
+ }
+
+}
+
+- Recorremos el arreglo desde el html
+
+
+<ul>
+    <li *ngFor="let heroe of heroes; let i =index">
+        {{i + 1}}-{{heroe}}
+    </li>
+</ul>
+
+<div>
+
+    <h3>Heroe Borrado</h3>
+    <h3>{{heroeBorrado}}</h3>
+
+</div>
+
+<button (click)="borrarHeroe();">Borrar</button>
+
+** Directiva *ngif, para colocar condiciones
+
+Por ejemplo, cuando el alegro este vacio no se muestra esta informacion
+
+<div *ngIf="heroeBorrado !== ' '">
+
+    <h3>Heroe Borrado: <small>{{heroeBorrado}}</small></h3>
+    
+</div>
+
+Tambien se puede colocar asi
+
+<div *ngIf="heroeBorrado">
+
+    <h3>Heroe Borrado: <small>{{heroeBorrado}}</small></h3>
+    
+</div>
+
+TS 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-listado',
+  templateUrl: './listado.component.html',
+  
+})
+export class ListadoComponent {
+
+ heroes: string[] = ['Spiderman','Iroman', 'Goku']
+ heroeBorrado: string = "";
+
+ borrarHeroe(){
+
+this.heroeBorrado = this.heroes.shift() || ' ';
+
+ }
+
+}
+
+
+HTML
+
+<p>Listado de Heroes</p>
+
+
+<div *ngIf="heroeBorrado">
+
+    <h3>Heroe Borrado: <small>{{heroeBorrado}}</small></h3>
+    
+</div>
+
+<ul>
+    <li *ngFor="let heroe of heroes; let i =index">
+        {{i + 1}}-{{heroe}}
+    </li>
+</ul>
+
+
+
+<button (click)="borrarHeroe();">Borrar</button>
+
+** Directivas ng-template y ngif-else
+
+ng-template =>  Nos permite mostrar template y se debe coloca un nombre que sera la referencia local 
+Todas las referencias comienzan con #
+
+TS 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-listado',
+  templateUrl: './listado.component.html',
+  
+})
+export class ListadoComponent {
+
+ heroes: string[] = ['Spiderman','Iroman', 'Goku']
+ heroeBorrado: string = "";
+
+ borrarHeroe(){
+
+this.heroeBorrado = this.heroes.shift() || ' ';
+
+ }
+
+}
+
+
+HTML
+
+<p>Listado de Heroes</p>
+
+
+<div *ngIf="heroeBorrado; else noBorrado">
+
+    <h3>Heroe Borrado: <small>{{heroeBorrado}}</small></h3>
+    
+</div>
+
+<ng-template #noBorrado >
+    No ha borrado nada
+</ng-template>
+
+
+<ul>
+    <li *ngFor="let heroe of heroes; let i =index">
+        {{i + 1}}-{{heroe}}
+    </li>
+</ul>
+
+
+
+<button (click)="borrarHeroe();">Borrar</button> 	
+
+
+** Modulos parte 1: El objetivo es agrupar gran cantidad de componentes,Encapsular las cosas y ayuda con la 
+carga perezosa (Lazy Loading)
+
++ Se puede crear de forma manual
+
+ -Se crea un archivo.module.ts
+	declarations: Son los componentes	
+	 exports: Lo que queremos que sea visible
+	imports: Se colocan los modulos que se van a importar
+
+APP MODULE
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { ContadorComponente } from './contador/contador.component';
+import { HeroesModule } from './heroes/heroes.module';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ContadorComponente,
+   
+  ],
+  imports: [
+    BrowserModule,
+    HeroesModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+APP HTML
+
+<app-listado></app-listado>
+
+NUEVO MODULO
+
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { HeroeComponent } from './heroe/heroe.component';
+import { ListadoComponent } from './listado/listado.component';
+
+@NgModule({
+
+    declarations:[
+        HeroeComponent,
+        ListadoComponent
+    ],
+    exports: [
+        ListadoComponent
+    ],
+    imports: [
+        CommonModule
+    ]
+
+
+})
+export class HeroesModule{}
+
+** Modulos parte2:
+
+Que es CommonModule? 
+Exporta todos las directrices básicas angular y tuberías, tales como NgIf ,
+ NgForOf , DecimalPipe , y así sucesivamente.
+
+
+*** PARA CREAR UN  TAGS EN GIT HUB
+
+git tag -a  V0.1.0 -m "Fin Seccion 4"
+git tag
+git
+
+
+*** Creamos un nuevo module automaticamente
+
+ng generate module dbz
+
+*** Creamos un componente sin las carpetas de pruebas
+
+ng g c dbz/mainPage --skipTests 
+
+*** Exportamos el modulo 
+ exports: [
+    MainPageComponent
+ ]
+
+*** Lo importamos en app
+
+ imports: [
+    BrowserModule,
+    HeroesModule,
+    ContadorModule,
+    DbzModule  
+
+  ],
+
+*** Llamamos el componente en el app html.
+
+<app-main-page></app-main-page>
+
+Es el nombre del selector dentro del componente
+
+ selector: 'app-main-page',
+
+*** Agregamosunos pequeños estilos en, style.css
+
+.row{
+    display: flex ;
+  }
+
+  .col {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  input {
+    display: block;
+    margin: 5px;
+  }  
+
+
+*** Creamos un  formulario en el nuevo componente creado
+
+
+<h1>Dragon Ball Z</h1>
+<hr>
+
+
+<div class = "row">
+    <div class = "col">
+        <h3>Persojanes</h3>
+        <hr>
+        <ul>
+            <li>Krillin - 700</li>
+            <li>Goku - 15,000</li>
+            <li>Vegeta - 8,500</li>
+        </ul>
+    </div>
+
+    <div class = "col">
+        <h3>Agregar</h3>
+        <hr>       
+        <form>
+            <input type="text"  placeholder="Nombre">
+            <input type="text" placeholder="Poder">
+            <button> Agregar</button>
+         </form>   
+        </div>
+
+</div>
+
+
+*** Cuando damos click al button la pagina se refresca y ya eso es antiguo, no se debe refrescar
+
+Opcion 1 para quietar el refresh
+
+-Agregamos un event en el formulario
+<form (submit) = "agregar( $event )"> 
+            <input type="text"  placeholder="Nombre">
+            <input type="text" placeholder="Poder">
+            <button type="submit"> Agregar</button>
+         </form>   
+        </div>
+- Creamos el metodo enel .ts
+agregar( event: any){
+  event.preventDefault(); // Evita el refresh del  navegador
+  console.log("Hey")
+
+ }
+
+
+Opcion 2, Lo mejor de angular
+
+- Importamos el formsModule de angular en el modulo donde esta el componente
+ imports: [
+    CommonModule,
+    FormsModule
+  ]
+
+- Llamamos el ngSubmit en el formulario
+
+<form (ngSubmit) = "agregar()"> 
+            <input type="text"  placeholder="Nombre">
+            <input type="text" placeholder="Poder">
+            <button type="submit"> Agregar</button>
+         </form>   
+        </div>
+
+
+*** Tomat informacion de los formularios y cajas de texto
+ngModel
+// XCreamos una interface
+interface Personaje {
+  nombre: string,
+  poder: number
+}
+
+//Creamos un objeto de tipo Personaje
+  nuevo: Personaje = {
+    nombre: 'Trucks',
+    poder: 14000
+  }  
+
+ agregar(){
+  //Imprimos el objeto
+  console.log(this.nuevo)
+ }
+
+En el HTML:
+
+ <div class = "col">
+        <h3>Agregar</h3>
+        <hr>       
+        <form (ngSubmit) = "agregar()"> 
+            <!-- [value]="nuevo.nombre", con esto enlazamos la variable del objeto con el .ts -->
+            <input type="text"  placeholder="Nombre" [value]="nuevo.nombre">
+            <input type="text" placeholder="Poder" [value]="nuevo.poder">
+            <button type="submit"> Agregar</button>
+         </form>   
+        </div>
+
+AHORA CAMBIAREMOS LOS VALORES
+
+Agregamos un evento llamado input
+
+<input type="text"  placeholder="Nombre" [value]="nuevo.nombre" (input)="cambiarNombre($event)">
+
+lo recibimos en el .ts
+
+cambiarNombre(event: any){
+
+  console.log(event.target.value)
+
+}
+PEROOOO, lo mejor es hacerlo asi:
+
+ <!-- Con el [(ngModel)], se escucha y envia un evento, ya no necesitariamos la funcion en .ts  -->
+
+
+ <div class = "col">
+        <h3>Agregar</h3>
+        <hr>       
+        <form (ngSubmit) = "agregar()"> 
+            <!-- [value]="nuevo.nombre", con esto enlazamos la variable del objeto con el .ts -->
+            <!-- Con el [(ngModel)], se escucha y envia un evento, ya no necesitariamos la funcion en .ts  -->
+            <input type="text"  placeholder="Nombre" name="nombre"  [(ngModel)]="nuevo.nombre"> 
+
+            <!-- [value]="nuevo.nombre" (input)="cambiarNombre($event)" -->
+            <input type="text" placeholder="Poder" name= "poder"[(ngModel)]="nuevo.poder">
+            <button type="submit"> Agregar</button>
+         </form>   
+        </div>
+
+*** Mostrar Listado de de persojanes
+
+
+.TS
+
+import { Component} from '@angular/core';
+
+// XCreamos la interface
+interface Personaje {
+  nombre: string,
+  poder: number
+}
+
+
+@Component({
+  selector: 'app-main-page',
+  templateUrl: './main-page.component.html',
+  styleUrls: ['./main-page.component.css']
+})
+export class MainPageComponent  {
+
+//Creamos un objeto de tipo Personaje
+  nuevo: Personaje = {
+    nombre: '',
+    poder: 0
+  }  
+
+// Creamos un arreglo de personaje
+personajes: Personaje[] = [
+{
+  nombre: 'Goku',
+  poder: 15000
+},
+{
+  nombre: 'Vegeta',
+  poder: 7500
+}
+];  
+
+ agregar(){
+    // Validamos si el texbox no trae datos,no imprima nada en consola
+    if ( this.nuevo.nombre.trim().length ===0) {
+      return;
+}
+
+  console.log(this.nuevo)
+
+  // Insertamos personajes
+  this.personajes.push(this.nuevo);
+
+  // Limpiamos las cajas de texto
+  this.nuevo = {
+    nombre: '',
+    poder: 0
+  }
+
+ }
+}
+
+HTML
+
+<h1>Dragon Ball Z</h1>
+<hr>
+
+
+<div class = "row">
+    <div class = "col">
+        <h3>Persojanes</h3>
+        <hr>
+        <ul>
+            <!-- Recorremos el arreglo de personaje -->
+            <li *ngFor="let personaje of personajes">
+                {{personaje.nombre}} - {{personaje.poder | number}}  <!-- El | es un pipe,que transforma la info,para que salga con formato numero -->
+            </li>         
+        </ul>
+    </div>
+
+    <div class = "col">
+        <h3>Agregar</h3>
+        <hr>       
+        <form (ngSubmit) = "agregar()"> 
+            <!-- [value]="nuevo.nombre", con esto enlazamos la variable del objeto con el .ts -->
+            <!-- Con el [(ngModel)], se escucha y envia un evento, ya no necesitariamos la funcion en .ts  -->
+            <input type="text"  placeholder="Nombre" name="nombre"  [(ngModel)]="nuevo.nombre"> 
+
+            <!-- [value]="nuevo.nombre" (input)="cambiarNombre($event)" -->
+            <input type="text" placeholder="Poder" name= "poder"[(ngModel)]="nuevo.poder">
+            <button type="submit"> Agregar</button>
+         </form>   
+        </div>
+
+</div>
+
+
+*** Crear componentes hijos que se comuniquen con los componentes padres, pequeños bloques de codigo.....
+
+- Creamos dentro de la carpeta dragon dbz creamos un componente llamado personajes
+- Colocamos el for en el html del nuevo componente
+
+<ul>
+    <!-- Recorremos el arreglo de personaje -->
+    <li *ngFor="let personaje of personajes">
+         {{personaje.nombre}} - {{personaje.poder | number}}  <!-- El | es un pipe,que transforma la info,para que salga con formato numero -->
+   </li>         
+</ul> 
+
+- Con el decorador @Input recibimos el arreglo que va a mandar el componente padre
+
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-personajes',
+  templateUrl: './personajes.component.html',
+  styleUrls: ['./personajes.component.css']
+})
+export class PersonajesComponent {
+
+  @Input() personajes: Personaje[] = [];
+}
+
+- Desde el html del componente padre mandamos el arreglo.
+
+<app-personajes [personajes]="personajes"></app-personajes>    
+
+- Para colocar el tipado,crearemos un folder llamado interfaces dentro de el modulo dbz
+
+- dentro de la carpeta un archivo, dbz.interface.ts
+
+- En este archivo colocaremos la interface que ya habiamos creado en el ts padre.
+
+// XCreamos la interface
+export interface Personaje {
+    nombre: string,
+    poder: number
+  }
+  
+- Importamos la interface en el ts del componente padre
+
+import { Personaje } from '../interfaces/dbz.interface';
+
+-Importamos la interface desde el componente hijo
+
+import { Personaje } from '../interfaces/dbz.interface';
+
+*** TAREA Crear un nuevo componente llamado agregar
+
+	ng g c dbz/agregar --skipTests
+
+- Pasamos las funciones y variables del main-page-component.ts al ts de agregar
+
+
+import { Component, Input } from '@angular/core';
+import { Personaje } from '../interfaces/dbz.interface';
+
+@Component({
+  selector: 'app-agregar',
+  templateUrl: './agregar.component.html',
+  styleUrls: ['./agregar.component.css']
+})
+export class AgregarComponent  {
+
+  // Recibe los del main-page
+  @Input() personajes: Personaje[] = [];
+
+
+  //Recibe el nuevo del main-page
+  @Input() nuevo: Personaje = {
+    nombre: '',
+    poder: 0
+  }  
+  
+
+
+  agregar(){
+    // Validamos si el texbox no trae datos,no imprima nada en consola
+    if ( this.nuevo.nombre.trim().length ===0) {
+      return;
+}
+
+  console.log(this.nuevo)
+
+  // Insertamos personajes
+  this.personajes.push(this.nuevo);
+
+  // Limpiamos las cajas de texto
+  this.nuevo = {
+    nombre: '',
+    poder: 0
+  }
+
+ }
+
+}
+
+
+
+-  Pasamos la parte del HTML que queremos componentizar
+
+
+AGREGAR HTML
+
+
+<h3>Agregar</h3>
+<hr>       
+<form (ngSubmit) = "agregar()"> 
+    <!-- [value]="nuevo.nombre", con esto enlazamos la variable del objeto con el .ts -->
+    <!-- Con el [(ngModel)], se escucha y envia un evento, ya no necesitariamos la funcion en .ts  -->
+    <input type="text"  placeholder="Nombre" name="nombre"  [(ngModel)]="nuevo.nombre"> 
+
+    <!-- [value]="nuevo.nombre" (input)="cambiarNombre($event)" -->
+    <input type="text" placeholder="Poder" name= "poder"[(ngModel)]="nuevo.poder">
+    <button type="submit"> Agregar</button>
+ </form>   
+
+
+MAIN-PAGE HTML
+
+<h1>Dragon Ball Z</h1>
+<hr>
+
+
+<div class = "row">
+    <div class = "col">
+        <h3>Persojanes</h3>
+        <hr>
+        <app-personajes [personajes]="personajes"></app-personajes>        
+    </div>
+        
+    <div class = "col">
+
+        <app-agregar 
+            [personajes] = "personajes"
+            [nuevo]="nuevo"
+        
+        ></app-agregar>
+    </div>
+
+</div>
+
+
+***@Outputs y EventEmitter
+
+Sirve para emitir o enviar los datos
+
+-  Agregamos un evento para emitir
+
+<h1>Dragon Ball Z</h1>
+<hr>
+
+
+<div class = "row">
+    <div class = "col">
+        <h3>Persojanes</h3>
+        <hr>
+        <app-personajes [personajes]="personajes"></app-personajes>        
+    </div>
+        
+    <div class = "col">
+
+        <!-- Agregaos un nuevo evento -->
+        <app-agregar       
+            [nuevo]="nuevo" 
+            (onNUevoPersonaje) = "agregarNuevoPersonaje( $event )"       
+        ></app-agregar>
+    </div>
+
+</div>
+
+- Creamos la funcion agregarNuevoPersonaje en el main-page
+
+import { Component} from '@angular/core';
+import { Personaje } from '../interfaces/dbz.interface';
+
+
+
+@Component({
+  selector: 'app-main-page',
+  templateUrl: './main-page.component.html',
+  styleUrls: ['./main-page.component.css']
+})
+export class MainPageComponent  {
+
+// Creamos un arreglo de personaje
+personajes: Personaje[] = [
+  {
+    nombre: 'Goku',
+    poder: 15000
+  },
+  {
+    nombre: 'Vegeta',
+    poder: 7500
+  }
+  ];  
+
+ nuevo: Personaje = {
+    nombre: '',
+    poder: 0
+  }  
+
+
+  
+// Agregar el nuevopersonaje
+
+agregarNuevoPersonaje( argumento:Personaje){
+  
+  this.personajes.push(argumento)
+ 
+
+}
+
+  }
+
+- Creamos el output que permitira enviar el nuevo persnaje
+
+
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Personaje } from '../interfaces/dbz.interface';
+
+@Component({
+  selector: 'app-agregar',
+  templateUrl: './agregar.component.html',
+  styleUrls: ['./agregar.component.css']
+})
+export class AgregarComponent  {
+
+
+//Recibe el nuevo del main-page
+  @Input() nuevo: Personaje = {
+    nombre: '',
+    poder: 0
+  }  
+  
+  // Para ENviar el nuevo personaje
+  @Output() onNUevoPersonaje: EventEmitter<Personaje>= new EventEmitter<Personaje>();
+
+  agregar(){
+    // Validamos si el texbox no trae datos,no imprima nada en consola
+    if ( this.nuevo.nombre.trim().length ===0) {
+      return;
+}
+
+  console.log(this.nuevo)
+
+  // Desde aqui lo enviamos
+  this.onNUevoPersonaje.emit(this.nuevo)
+
+
+  // Limpiamos las cajas de texto
+  this.nuevo = {
+    nombre: '',
+    poder: 0
+  }
+
+ }
+
+}
+
+- En esta clase emitimos los personajes  para que mostrrlos en pantalla
+
+
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Personaje } from '../interfaces/dbz.interface';
+
+@Component({
+  selector: 'app-agregar',
+  templateUrl: './agregar.component.html',
+  styleUrls: ['./agregar.component.css']
+})
+export class AgregarComponent  {
+
+
+//Recibe el nuevo del main-page
+  @Input() nuevo: Personaje = {
+    nombre: '',
+    poder: 0
+  }  
+  
+  // Para ENviar el nuevo personaje
+  @Output() onNUevoPersonaje: EventEmitter<Personaje>= new EventEmitter<Personaje>();
+
+  agregar(){
+    // Validamos si el texbox no trae datos,no imprima nada en consola
+    if ( this.nuevo.nombre.trim().length ===0) {
+      return;
+}
+
+  console.log(this.nuevo)
+
+  // Desde aqui lo enviamos
+  this.onNUevoPersonaje.emit(this.nuevo)
+
+
+  // Limpiamos las cajas de texto
+  this.nuevo = {
+    nombre: '',
+    poder: 0
+  }
+
+ }
+
+}
+
+*** Depuracion de aplicaciones
+	- debugger; con esta funcion podemos realizar debug
+		Esto solo lo interpreta google chrome
+
+	- Utilizar un debug como si fuere visual studio
+
+		* Digitar F5 y seleccionar chrome preview o Web App hrome 
+		* Esto crea la carpeta .vscode
+		* Abrimos el archivo y cambiamos elpuerto 
+	
+				{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}
+
+		* Colocamos un Breack Point para hacer debug t damos f5
+
+*** Servicios
+
+-Creamos una capeta llamada services dentro de la carpeta dbz
+-Dentro de la carpeta cramos un archivo dbz.service.ts
+
+import { Injectable } from "@angular/core";
+
+@Injectable()
+export class DbzService {
+
+constructor(){
+    console.log('Servicio Inicializado')
+}
+
+}
+
+
+- Agregamos el servicio en el dbz.module
+
+providers: [
+    DbzService
+  ]
+
+- En el main page.ts injectamos el servicio
+
+// Injectamos el servicio
+constructor( private dbzService: DbzService){}
+
+*** Centralizar el acceso de los personajes en el servicio
+
+
+	1. Primer forma
+
+	- Colocamos el arreglo de personaje en elservicio
+
+import { Injectable } from "@angular/core";
+import { Personaje } from '../interfaces/dbz.interface';
+
+@Injectable()
+export class DbzService {
+
+// Creamos un arreglo de personaje
+personajes: Personaje[] = [
+    {
+      nombre: 'Goku',
+      poder: 15000
+    },
+    {
+      nombre: 'Vegeta',
+      poder: 7500
+    }
+    ];  
+
+
+
+    
+
+constructor(){
+    console.log('Servicio Inicializado')
+}
+
+}
+
+	- En el main component -
+
+  // Inicializamos el arreglo personaje
+  personajes: Personaje[] = [];
+
+// Injectamos el servicio asignamos el arreglo del servicio al arreglo de esta clase
+constructor( private dbzService: DbzService){
+  this.personajes = this.dbzService.personajes
+  }
+
+
+	2. Segunda forma, RECOMENDABLE
+
+	- Hacemos un get para traerlo
+
+	get personajes(): Personaje[]{
+
+	  return this.dbzService.personajes
+
+	}
+
+	- Refactorizar
+	 
+	Borramos todo lo de  main-page .ts
+
+	import { Component} from '@angular/core';
+import { Personaje } from '../interfaces/dbz.interface';
+import { DbzService } from '../services/dbz.service';
+
+
+
+@Component({
+  selector: 'app-main-page',
+  templateUrl: './main-page.component.html',
+  styleUrls: ['./main-page.component.css']
+})
+export class MainPageComponent  {
+
+
+ nuevo: Personaje = {
+    nombre: '',
+    poder: 0
+  }  
+
+constructor(){}
+
+}
+
+
+   Modificamos  el mainpage html
+
+	<h1>Dragon Ball Z</h1>
+<hr>
+
+
+<div class = "row">
+    <div class = "col">
+        <h3>Persojanes</h3>
+        <hr>
+        <app-personajes></app-personajes>        
+    </div>
+        
+    <div class = "col">
+
+        <!-- Agregaos un nuevo evento -->
+        <app-agregar       
+            [nuevo]="nuevo"                   
+        ></app-agregar>
+    </div>
+
+</div>
+
+
+  agregamos un get en el servicio
+
+import { Injectable } from "@angular/core";
+import { Personaje } from '../interfaces/dbz.interface';
+
+@Injectable()
+export class DbzService {
+
+
+    private _personajes: Personaje[] = [
+        {
+          nombre: 'Goku',
+          poder: 15000
+        },
+        {
+          nombre: 'Vegeta',
+          poder: 7500
+        }
+        ];  
+    
+get personajes(): Personaje[]{
+    return [...this._personajes];
+}
+
+constructor(){
+    console.log('Servicio Inicializado')
+}
+
+}
+
+    Modificamos el componente personaje .ts
+
+import { Component, Input } from '@angular/core';
+  import { Personaje } from '../interfaces/dbz.interface';
+import { DbzService } from '../services/dbz.service';
+
+@Component({
+  selector: 'app-personajes',
+  templateUrl: './personajes.component.html',
+  styleUrls: ['./personajes.component.css']
+})
+export class PersonajesComponent {
+
+ // @Input() personajes: Personaje[] = [];
+
+  get personajes(){
+    return this.dbzService.personajes
+
+  }
+
+  constructor(private dbzService: DbzService){}
+}
+
+
+Sintaxis spread
+
+permite a un elemento iterable tal como un arreglo o cadena ser expandido en lugares donde cero o más argumentos
+
+https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
+*** Crear un metodo que agregue personajes desde el servicio
+
+
+    // Creaos un metodo que agrega personajes
+
+    agregarPersonaje(personaje: Personaje){
+        this._personajes.push(personaje)
+    }
+
+	
+	y un get
+	
+	 get personajes(): Personaje[]{
+        return [...this._personajes];
+    }
+
+  // Modificamos el componente agregar .ts
+	
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Personaje } from '../interfaces/dbz.interface';
+import { DbzService } from '../services/dbz.service';
+
+@Component({
+  selector: 'app-agregar',
+  templateUrl: './agregar.component.html',
+  styleUrls: ['./agregar.component.css']
+})
+export class AgregarComponent  {
+
+
+//Recibe el nuevo del main-page
+  @Input() nuevo: Personaje = {
+    nombre: '',
+    poder: 0
+  }  
+
+  
+// Creamos el constructor con el servicio  
+constructor( private dbzService: DbzService){}
+
+
+
+  // Para ENviar el nuevo personaje
+  //@Output() onNUevoPersonaje: EventEmitter<Personaje>= new EventEmitter<Personaje>();
+
+  agregar(){
+    // Validamos si el texbox no trae datos,no imprima nada en consola
+    if ( this.nuevo.nombre.trim().length ===0) {
+      return;
+}
+
+
+  // Desde aqui lo enviamos
+  //this.onNUevoPersonaje.emit(this.nuevo)
+  this.dbzService.agregarPersonaje(this.nuevo);
+
+
+  // Limpiamos las cajas de texto
+  this.nuevo = {
+    nombre: '',
+    poder: 0
+  }
+
+ }
+
+}
+
+***
+
+
+   
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
