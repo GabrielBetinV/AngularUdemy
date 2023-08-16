@@ -1,0 +1,7 @@
+
+<ul>
+    <!-- Recorremos el arreglo de personaje -->
+    <li *ngFor="let personaje of personajes">
+         {{personaje.nombre}} - {{personaje.poder | number}}  <!-- El | es un pipe,que transforma la info,para que salga con formato numero -->
+   </li>         
+</ul> 
