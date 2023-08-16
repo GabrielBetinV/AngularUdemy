@@ -464,6 +464,114 @@ en el html
 
 El componente crea un  ngOnInit, que se puede utilizar para inicializar cosa
 
+** Directiva *ngIf
+
+
+Se puede utilizar para mostrar u ocultar DOM
+
+<button 
+ *ngIf="nombre !== 'Spiderman'"
+(click)="cambiarNombre()"
+>
+    Cambiar Heroe
+</button>
+
+Podriamos colocar expresiones que sean  booleana, o undefined, null o 0.
+
+
+HTML
+
+<h1>{{nombre}}</h1>
+
+<dl>
+
+    <td> Nombre: </td>
+    <dd>{{nombre}}</dd>
+
+    <td> Edad: </td>
+    <dd>{{edad}}</dd>
+
+    <td> Funcion: </td>
+    <dd>{{obtenerNombre()}}</dd>   
+
+    <td> Capitalizado: </td>
+    <dd>{{nombreCapitalizado}}</dd>
+</dl>
+
+<button 
+ *ngIf="nombre !== 'Spiderman'"
+(click)="cambiarNombre()"
+>
+    Cambiar Heroe
+</button>
+
+
+<button 
+*ngIf="edad > 35"
+(click)="cambiarEdad()"
+>
+    Cambiar Edad
+</button>
+
+
+<button 
+
+(click)="resetForm()"
+>
+  Reset
+</button>
+
+TS
+
+import { Component } from "@angular/core";
+
+
+@Component({
+
+    selector: 'app-heroe',
+    templateUrl: 'heroe.component.html'
+
+
+})
+export class HeroeComponent{
+
+ nombre: string = 'Iroman';
+ edad: number = 45
+
+ // Creamos una funcion que retorno el nombre
+ obtenerNombre(): string{
+    return `${this.nombre} - ${this.edad}`;
+ }
+
+ // Metodo get de la clase
+
+ get nombreCapitalizado(): string{
+    return this.nombre.toUpperCase();
+ }
+
+// Creamos un metodo para cambiar la edad
+
+cambiarNombre():void {
+    this.nombre = 'Spiderman'
+}
+
+
+// Creamos un metodo para cambiar de nombre
+
+cambiarEdad():void {
+    this.edad =  30
+
+    }
+
+
+    resetForm(){
+        this.nombre = 'Iroman';
+        this.edad =  45;
+    }
+
+}
+
+
 ** Directiva *ngFor, para recorrer un arreglo como si fuera un ciclo for
 
 -Creamos un arreglo en elcomponente
