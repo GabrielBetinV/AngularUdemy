@@ -20,4 +20,7 @@
 
 
 
-<button (click)="borrarHeroe();">Borrar</button>
+<button 
+*ngIf="heroes.length > 0"
+(click)="borrarHeroe();"
+>Borrar</button>

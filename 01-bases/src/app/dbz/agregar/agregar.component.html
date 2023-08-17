@@ -4,9 +4,9 @@
 <form (ngSubmit) = "agregar()"> 
     <!-- [value]="nuevo.nombre", con esto enlazamos la variable del objeto con el .ts -->
     <!-- Con el [(ngModel)], se escucha y envia un evento, ya no necesitariamos la funcion en .ts  -->
-    <input type="text"  placeholder="Nombre" name="nombre"  [(ngModel)]="nuevo.nombre"> 
+    <input class="form-control mb-2" type="text"  placeholder="Nombre" name="nombre"  [(ngModel)]="nuevo.nombre"> 
 
     <!-- [value]="nuevo.nombre" (input)="cambiarNombre($event)" -->
-    <input type="text" placeholder="Poder" name= "poder"[(ngModel)]="nuevo.poder">
-    <button type="submit"> Agregar</button>
+    <input class="form-control mb-2" type="text" placeholder="Poder" name= "poder"[(ngModel)]="nuevo.poder">
+    <button  class="btn btn-primary"   type="submit"> Agregar</button>
  </form>   
