@@ -1,9 +1,60 @@
 *** Generar la version de produccion
 
-ng build --prod
+ng build 
+
+o
+
+npm run build
+
+
 
 La carpeta se guardo en D:\ANGULAR\3.Angular\Proyectos\01-bases\dist
 
 *** https://www.netlify.com/
 
 Solo es dejar caer la carpeta del proyecto dist en la pagina para que sde despliegue
+
+
+** Servidor local
+
+https://www.npmjs.com/package/http-server
+
+Instalar de manera local
+
+npm install --global http-server
+
+Abrir el cmd en la carpeta del proyecto
+
+D:\ANGULAR\UDEMY\UDEMY\3.Angular\angular-bases-fin-seccion-5\angular-bases-fin-seccion-5\dist\bases
+
+Digitar http-server -o
+
+Se abrira la aplicacion en el navegador 
+
+http://127.0.0.1:8080/
+
+
+** Git Hub  Pages
+
+- Crear el repositorio
+
+- Se sube el codigo al repositorio
+
+- Setting
+
+- Pages
+
+- Se puede desplegar desde una rama o un accion
+
+
+main - /docs 
+
+crear la carpeta 
+
+
+ver video para seguir paso a paso  
+
+
+-** Package.json Scripts
+
+ 
