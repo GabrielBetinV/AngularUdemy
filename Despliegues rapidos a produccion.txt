@@ -57,4 +57,4 @@ ver video para seguir paso a paso
 
 -** Package.json Scripts
 
- 
+Ver video para configurar archivos script para ejcutar en consola 
